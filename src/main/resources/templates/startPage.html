@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Посмотреть расписание</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script th:inline="javascript">
+            var universityId;
+            var facultyId;
+            var specialityId;
+            var groupId;
+            $(document).ready(function(){
+                $(function(){
+                    var availableUniversities = [[${allUniversities}]];
+                        $("#universities").autocomplete({
+                            source: availableUniversities
+                        });
+                    });
+                $("#faculties").focus(function(){
+                    var universityName = $('#universities').val();
+                    $.post({
+                        url: '/getFaculties',
+                        contentType: "application/json; charset=UTF-8",
+                        mimeType: "text/html; charset=UTF-8",
+                        scriptCharset: "utf-8",
+                        data: JSON.stringify ({
+                            "universityName": universityName,
+                        }),
+                        success: function(res){
+                            var parsed = JSON.parse(res);
+                            universityId = parsed.universityId;
+                            var facultiesNames = parsed.facultiesNames;
+                            $("#faculties").autocomplete({
+                                source: facultiesNames
+                            });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus, errorThrown);
+                        }
+                    });
+                });
+                $("#specialities").focus(function(){
+                    var facultyName = $('#faculties').val();
+                    $.post({
+                        url: '/getSpecialities',
+                        contentType: "application/json; charset=UTF-8",
+                        mimeType: "text/html; charset=UTF-8",
+                        scriptCharset: "utf-8",
+                        data: JSON.stringify ({
+                            "universityId": universityId,
+                            "facultyName": facultyName,
+                        }),
+                        success: function(res) {
+                            var parsed = JSON.parse(res);
+                            facultyId = parsed.facultyId;
+                            var specialitiesNames = parsed.specialitiesNames;
+                            $("#specialities").autocomplete({
+                                source: specialitiesNames
+                            });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus, errorThrown);
+                        }
+                    });
+                });
+                $("#groups").focus(function(){
+                    var specialityName = $('#specialities').val();
+                    console.log(specialityName);
+                    console.log(facultyId);
+                    $.post({
+                        url: '/getGroups',
+                        contentType: "application/json; charset=UTF-8",
+                        mimeType: "text/html; charset=UTF-8",
+                        scriptCharset: "utf-8",
+                        data: JSON.stringify ({
+                            "facultyId": facultyId,
+                            "specialityName": specialityName,
+                        }),
+                        success: function(res) {
+                            console.log('res ' + res);
+                            var parsed = JSON.parse(res);
+                            console.log('parsed ' + parsed);
+                            specialityId = parsed.specialityId;
+                            console.log('specialityId ' + specialityId);
+                            var groupsNames = parsed.groupsNames;
+                            console.log('groupsNames ' + groupsNames);
+                            $("#groups").autocomplete({
+
+                                source: groupsNames
+
+                            });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus, errorThrown);
+                        }
+                    });
+                });
+                $('#viewTimeTable').click(function() {
+                    var groupName = $('#groups').val();
+                    console.log('groupName ' + groupName);
+                    console.log('specialityId ' + specialityId);
+                    $.post({
+                        url: '/getGroupId',
+                        contentType: "application/json; charset=UTF-8",
+                        mimeType: "text/html; charset=UTF-8",
+                        scriptCharset: "utf-8",
+                        data: JSON.stringify ({
+                            "groupName": groupName,
+                            "specialityId": specialityId,
+                        }),
+                        success: function(res) {
+                            var parsed = JSON.parse(res);
+                            console.log('parsed ' + parsed);
+                            groupId = parsed;
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus, errorThrown);
+                        }
+                    });
+
+                });
+            });
+    </script>
+</head>
+<body>
+<div class="ui-widget">
+    <input id="universities" type="text"/>
+    <input id="faculties" type="text"/>
+    <input id="specialities" type="text"/>
+    <input id="groups" type="text"/>
+    <button id="viewTimeTable">Посмотреть расписание</button>
+</div>
+</body>
+</html>

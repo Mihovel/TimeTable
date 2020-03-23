@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>Посмотреть расписание</title>
+
+        <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+        <style>
+            .container {
+                margin: 50px;
+            }
+        </style>
+
+    <body>
+        <div class="container">
+            <h1>Расписание группы</h1>
+            <h4>
+                <i th:text="${currentDate}"></i>
+            </h4>
+
+            <table class="table table-bordered table-dark">
+                <tbody>
+                <tr>
+                    <td class="bg-grey" rowspan="9" width="30px">
+                        <strong>ПН</strong>
+                    </td>
+                </tr>
+
+                <tr class="bg-grey">
+                    <td width="15%">Время</td>
+                    <td width="40%">Название предмета</td>
+                    <td width="45%">Комментарии</td>
+                </tr>
+
+                <tr th:each="element: ${mondayLessons}">
+                    <td th:text="${element.durability}"></td>
+                    <td th:text="${element.lessonName}"></td>
+                    <td th:text="${element.comments}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+            <br>
+
+            <table class="table table-bordered table-dark">
+                <tbody>
+                <tr>
+                    <td class="bg-grey" rowspan="9" width="30px">
+                        <strong>Вт</strong>
+                    </td>
+                </tr>
+
+                <tr class="bg-grey">
+                    <td width="15%">Время</td>
+                    <td width="40%">Название предмета</td>
+                    <td width="45%">Комментарии</td>
+                </tr>
+
+                <tr th:each="element: ${tuesdayLessons}">
+                    <td th:text="${element.durability}"></td>
+                    <td th:text="${element.lessonName}"></td>
+                    <td th:text="${element.comments}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+            <br>
+
+            <table class="table table-bordered table-dark">
+                <tbody>
+                <tr>
+                    <td class="bg-grey" rowspan="9" width="30px">
+                        <strong>Ср</strong>
+                    </td>
+                </tr>
+
+                <tr class="bg-grey">
+                    <td width="15%">Время</td>
+                    <td width="40%">Название предмета</td>
+                    <td width="45%">Комментарии</td>
+                </tr>
+
+                <tr th:each="element: ${wednesdayLessons}">
+                    <td th:text="${element.durability}"></td>
+                    <td th:text="${element.lessonName}"></td>
+                    <td th:text="${element.comments}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+            <br>
+
+            <table class="table table-bordered table-dark">
+                <tbody>
+                <tr>
+                    <td class="bg-grey" rowspan="9" width="30px">
+                        <strong>Чт</strong>
+                    </td>
+                </tr>
+
+                <tr class="bg-grey">
+                    <td width="15%">Время</td>
+                    <td width="40%">Название предмета</td>
+                    <td width="45%">Комментарии</td>
+                </tr>
+
+                <tr th:each="element: ${thursdayLessons}">
+                    <td th:text="${element.durability}"></td>
+                    <td th:text="${element.lessonName}"></td>
+                    <td th:text="${element.comments}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+            <br>
+
+            <table class="table table-bordered table-dark">
+                <tbody>
+                <tr>
+                    <td class="bg-grey" rowspan="9" width="30px">
+                        <strong>Пт</strong>
+                    </td>
+                </tr>
+
+                <tr class="bg-grey">
+                    <td width="15%">Время</td>
+                    <td width="40%">Название предмета</td>
+                    <td width="45%">Комментарии</td>
+                </tr>
+
+                <tr th:each="element: ${fridayLessons}">
+                    <td th:text="${element.durability}"></td>
+                    <td th:text="${element.lessonName}"></td>
+                    <td th:text="${element.comments}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

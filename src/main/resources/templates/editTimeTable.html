@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Расписание</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script type="text/javascript"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+        <style>
+            input {
+                margin: 1px;
+                width: 100px;
+            }
+            .lessonInput {
+                margin: 1px;
+                width: 300px;
+            }
+            .commentInput {
+                width: 500px;
+            }
+
+            .weekdayContainer {
+                position: absolute;
+                width: 50px;
+            }
+            .lessonsAndTimeContainerForDay {
+                position: relative;
+                left: 50px;
+                margin-bottom: 20px;
+            }
+
+            .lessonLabel {
+                position: absolute;
+                left: 210px;
+                width: 20%;
+            }
+        </style>
+
+    </head>
+        <body>
+            <div class="col-md-8">
+                <div class="page-header">
+                    <h1>Редактироовать расписание</h1>
+                </div>
+            </div>
+
+            <div>
+                <div class="col-md-6 hidden-xs">
+                    <div class="weekdayContainer">
+                        <strong>ПН</strong>
+                    </div>
+
+                    <div class="lessonsAndTimeContainerForDay">
+                        <label width="20%">Время</label>
+                        <label class="lessonLabel">Предмет</label>
+                        <br/>
+
+
+                        <input type="text" id="1lessonTimeMonday" value="8:30-10:05"/>
+                        <input type="text" id="1lessonMonday" class="lessonInput"/>
+                        <input type="text" id="1lessonCommentMonday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="2lessonTimeMonday" value="10:15-11:50"/>
+                        <input type="text" id="2lessonMonday" class="lessonInput"/>
+                        <input type="text" id="2lessonCommentMonday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="3lessonTimeMonday" value="12:00-13:35"/>
+                        <input type="text" id="3lessonMonday" class="lessonInput"/>
+                        <input type="text" id="3lessonCommentMonday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="4lessonTimeMonday" value="13:50-15:30"/>
+                        <input type="text" id="4lessonMonday" class="lessonInput"/>
+                        <input type="text" id="4lessonCommentMonday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="5lessonTimeMonday" value="13:50-15:30"/>
+                        <input type="text" id="5lessonMonday" class="lessonInput"/>
+                        <input type="text" id="5lessonCommentMonday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="6lessonTimeMonday" value="13:50-15:30"/>
+                        <input type="text" id="6lessonMonday" class="lessonInput"/>
+                        <input type="text" id="6lessonCommentMonday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="7lessonTimeMonday" value="13:50-15:30"/>
+                        <input type="text" id="7lessonMonday" class="lessonInput"/>
+                        <input type="text" id="7lessonCommentMonday" class="commentInput"/>
+                        <br/>
+                        </div>
+                        </div>
+
+                <div class="col-md-6 hidden-xs">
+                    <div class="weekdayContainer">
+                        <strong>ВТ</strong>
+                    </div>
+
+                    <div class="lessonsAndTimeContainerForDay">
+                        <label width="20%">Время</label>
+                        <br/>
+
+                        <input type="text" id="1lessonTimeTuesday" value="8:30-10:05"/>
+                        <input type="text" id="1lessonTuesday" class="lessonInput"/>
+                        <input type="text" id="1lessonCommentTuesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="2lessonTimeTuesday" value="10:15-11:50"/>
+                        <input type="text" id="2lessonTuesday" class="lessonInput"/>
+                        <input type="text" id="2lessonCommentTuesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="3lessonTimeTuesday" value="12:00-13:35"/>
+                        <input type="text" id="3lessonTuesday" class="lessonInput"/>
+                        <input type="text" id="3lessonCommentTuesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="4lessonTimeTuesday" value="13:50-15:30"/>
+                        <input type="text" id="4lessonTuesday" class="lessonInput"/>
+                        <input type="text" id="4lessonCommentTuesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="5lessonTimeTuesday" value="13:50-15:30"/>
+                        <input type="text" id="5lessonTuesday" class="lessonInput"/>
+                        <input type="text" id="5lessonCommentTuesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="6lessonTimeTuesday" value="13:50-15:30"/>
+                        <input type="text" id="6lessonTuesday" class="lessonInput"/>
+                        <input type="text" id="6lessonCommentTuesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="7lessonTimeTuesday" value="13:50-15:30"/>
+                        <input type="text" id="7lessonTuesday" class="lessonInput"/>
+                        <input type="text" id="7lessonCommentTuesday" class="commentInput"/>
+                        <br/>
+                    </div>
+                </div>
+
+                <div class="col-md-6 hidden-xs">
+                    <div class="weekdayContainer">
+                        <strong>СР</strong>
+                    </div>
+
+                    <div class="lessonsAndTimeContainerForDay">
+                        <label width="20%">Время</label>
+                        <br/>
+
+                        <input type="text" id="1lessonTimeWednesday" value="8:30-10:05"/>
+                        <input type="text" id="1lessonWednesday" class="lessonInput"/>
+                        <input type="text" id="1lessonCommentWednesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="2lessonTimeWednesday" value="10:15-11:50"/>
+                        <input type="text" id="2lessonWednesday" class="lessonInput"/>
+                        <input type="text" id="2lessonCommentWednesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="3lessonTimeWednesday" value="12:00-13:35"/>
+                        <input type="text" id="3lessonWednesday" class="lessonInput"/>
+                        <input type="text" id="3lessonCommentWednesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="4lessonTimeWednesday" value="13:50-15:30"/>
+                        <input type="text" id="4lessonWednesday" class="lessonInput"/>
+                        <input type="text" id="4lessonCommentWednesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="5lessonTimeWednesday" value="13:50-15:30"/>
+                        <input type="text" id="5lessonWednesday" class="lessonInput"/>
+                        <input type="text" id="5lessonCommentWednesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="6lessonTimeWednesday" value="13:50-15:30"/>
+                        <input type="text" id="6lessonWednesday" class="lessonInput"/>
+                        <input type="text" id="6lessonCommentWednesday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="7lessonTimeWednesday" value="13:50-15:30"/>
+                        <input type="text" id="7lessonWednesday" class="lessonInput"/>
+                        <input type="text" id="7lessonCommentWednesday" class="commentInput"/>
+                        <br/>
+                    </div>
+                </div>
+
+                <div class="col-md-6 hidden-xs">
+                    <div class="weekdayContainer">
+                        <strong>ЧТ</strong>
+                    </div>
+
+                    <div class="lessonsAndTimeContainerForDay">
+                        <label width="20%">Время</label>
+                        <br/>
+
+                        <input type="text" id="1lessonTimeThursday" value="8:30-10:05"/>
+                        <input type="text" id="1lessonThursday" class="lessonInput"/>
+                        <input type="text" id="1lessonCommentThursday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="2lessonTimeThursday" value="10:15-11:50"/>
+                        <input type="text" id="2lessonThursday" class="lessonInput"/>
+                        <input type="text" id="2lessonCommentThursday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="3lessonTimeThursday" value="12:00-13:35"/>
+                        <input type="text" id="3lessonThursday" class="lessonInput"/>
+                        <input type="text" id="3lessonCommentThursday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="4lessonTimeThursday" value="13:50-15:30"/>
+                        <input type="text" id="4lessonThursday" class="lessonInput"/>
+                        <input type="text" id="4lessonCommentThursday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="5lessonTimeThursday" value="13:50-15:30"/>
+                        <input type="text" id="5lessonThursday" class="lessonInput"/>
+                        <input type="text" id="5lessonCommentThursday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="6lessonTimeThursday" value="13:50-15:30"/>
+                        <input type="text" id="6lessonThursday" class="lessonInput"/>
+                        <input type="text" id="6lessonCommentThursday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="7lessonTimeThursday" value="13:50-15:30"/>
+                        <input type="text" id="7lessonThursday" class="lessonInput"/>
+                        <input type="text" id="7lessonCommentThursday" class="commentInput"/>
+                        <br/>
+                    </div>
+                </div>
+
+                <div class="col-md-6 hidden-xs">
+                    <div class="weekdayContainer">
+                        <strong>ПТ</strong>
+                    </div>
+
+                    <div class="lessonsAndTimeContainerForDay">
+                        <label width="20%">Время</label>
+                        <br/>
+
+                        <input type="text" id="1lessonTimeFriday" value="8:30-10:05"/>
+                        <input type="text" id="1lessonFriday" class="lessonInput"/>
+                        <input type="text" id="1lessonCommentFriday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="2lessonTimeFriday" value="10:15-11:50"/>
+                        <input type="text" id="2lessonFriday" class="lessonInput"/>
+                        <input type="text" id="2lessonCommentFriday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="3lessonTimeFriday" value="12:00-13:35"/>
+                        <input type="text" id="3lessonFriday" class="lessonInput"/>
+                        <input type="text" id="3lessonCommentFriday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="4lessonTimeFriday" value="13:50-15:30"/>
+                        <input type="text" id="4lessonFriday" class="lessonInput"/>
+                        <input type="text" id="4lessonCommentFriday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="5lessonTimeFriday" value="13:50-15:30"/>
+                        <input type="text" id="5lessonFriday" class="lessonInput"/>
+                        <input type="text" id="5lessonCommentFriday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="6lessonTimeFriday" value="13:50-15:30"/>
+                        <input type="text" id="6lessonFriday" class="lessonInput"/>
+                        <input type="text" id="6lessonCommentFriday" class="commentInput"/>
+                        <br/>
+
+                        <input type="text" id="7lessonTimeFriday" value="13:50-15:30"/>
+                        <input type="text" id="7lessonFriday" class="lessonInput"/>
+                        <input type="text" id="7lessonCommentFriday" class="commentInput"/>
+                        <br/>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary" data-toggle="button"
+                    id="update" aria-pressed="false">Отправить в бд</button>
+            </div>
+        </body>
+
+    <script>
+        $("#update").click(function(e) {
+            e.preventDefault();
+
+            var listOfLessonsMonday = [];
+            var json = {};
+            $("[id$='Monday']").each(function (i, value) {
+                if (i % 2 == 0) {
+                    json.durability = ($(value).val());
+                } else {
+                    json.lessonName = ($(value).val());
+                    json.comments = ($(value).val());
+                    listOfLessonsMonday.push(json);
+                    json = {};
+                }
+            });
+            json = {};
+
+            var listOfLessonsTuesday = [];
+            $("[id$='Tuesday']").each(function (i, value) {
+                if (i % 2 == 0) {
+                    json.durability = ($(value).val());
+                } else {
+                    json.lessonName = ($(value).val());
+                    json.comments = ($(value).val());
+                    listOfLessonsTuesday.push(json);
+                    json = {};
+                }
+            });
+            json = {};
+
+            var listOfLessonsWednesday = [];
+            $("[id$='Wednesday']").each(function (i, value) {
+                if (i % 2 == 0) {
+                    json.durability = ($(value).val());
+                } else {
+                    json.lessonName = ($(value).val());
+                    json.comments = ($(value).val());
+                    listOfLessonsWednesday.push(json);
+                    json = {};
+                }
+            });
+            json = {};
+
+            var listOfLessonsThursday = [];
+            $("[id$='Thursday']").each(function (i, value) {
+                if (i % 2 == 0) {
+                    json.durability = ($(value).val());
+                } else {
+                    json.lessonName = ($(value).val());
+                    json.comments = ($(value).val());
+                    listOfLessonsThursday.push(json);
+                    json={};
+                }
+            });
+            json = {};
+
+            var listOfLessonsFriday = [];
+            $("[id$='Friday']").each(function (i, value) {
+                if (i % 2 == 0) {
+                    json.durability = ($(value).val());
+                } else {
+                    json.lessonName = ($(value).val());
+                    json.comments = ($(value).val());
+                    listOfLessonsFriday.push(json);
+                    json = {};
+                }
+            });
+            json = {};
+
+
+            $.post({
+                url: '/alter',
+                contentType: "application/json; charset=UTF-8",
+                mimeType: "text/html; charset=UTF-8",
+                scriptCharset: "utf-8",
+                data: JSON.stringify ({
+                    "mondayLessons": listOfLessonsMonday,
+                    "tuesdayLessons": listOfLessonsTuesday,
+                    "wednesdayLessons": listOfLessonsWednesday,
+                    "thursdayLessons": listOfLessonsThursday,
+                    "fridayLessons": listOfLessonsFriday,
+                    "version": "",
+                    "author": "",
+                }),
+                success: function(res) {
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            })
+        });
+    </script>
+</html>
