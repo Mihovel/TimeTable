@@ -1,12 +1,21 @@
 package web.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
-public class EmailRepositoryImpl implements EmailRepository {
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class UserRepositoryImpl implements UserRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public EmailRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public UserRepositoryImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
@@ -39,4 +48,14 @@ public class EmailRepositoryImpl implements EmailRepository {
         }
         return count > 0;
     }
+
+    @Override
+    public List<Integer> getGroupIdByUserName(String userName) {
+        String sqlParam = "select availableGroupId from users where userName=:userName";
+        SqlParameterSource param = new MapSqlParameterSource("userName", userName);
+        return Arrays.stream(namedParameterJdbcTemplate.queryForObject(sqlParam, param, String.class).split(",")).
+                map(Integer::parseInt).collect(Collectors.toList());
+    }
+
+
 }

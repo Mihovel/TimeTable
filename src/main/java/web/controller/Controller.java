@@ -1,15 +1,18 @@
 package web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 import web.entity.*;
+import web.exeptions.ControllerExeption;
 import web.exeptions.UserAlreadyExistsExeption;
 import web.repository.*;
-import web.service.EmailService;
+import web.service.UserService;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -33,7 +36,7 @@ public class Controller {
     public org.springframework.web.servlet.ModelAndView getTimeTable(@RequestParam Integer groupId) {
         ModelAndView modelAndView = new ModelAndView("viewTimeTable");
 
-        TimeTableDTO timeTableDto = timeTableRepository.selectTimeTable();
+        /*TimeTableDTO timeTableDto = timeTableRepository.selectTimeTable();
         Map<String, List<Lesson>> mapOfLessons = new HashMap<>();
 
         List<Lesson> lessons = timeTableDto.getMondayLessons();
@@ -59,7 +62,7 @@ public class Controller {
         Date dateEnd = calendar.getTime();
 
         modelAndView.addObject("currentDate", dateStart + " - " + simpleDateFormat.format(dateEnd));
-        modelAndView.addAllObjects(mapOfLessons);
+        modelAndView.addAllObjects(mapOfLessons);*/
 
         return modelAndView;
     }
@@ -79,7 +82,9 @@ public class Controller {
     @Autowired
     private GroupsRepository groupsRepository;
     @Autowired
-    private EmailService emailService;
+    private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @RequestMapping(value = "/start", method = RequestMethod.GET)
     public ModelAndView startPage() {
@@ -133,10 +138,16 @@ public class Controller {
         System.out.println("emailDTO = " + emailDTO);
         String email = emailDTO.getEmail();
         try {
-            emailService.sendAndSaveAccount(email);
+            userService.sendAndSaveAccount(email);
         } catch (UserAlreadyExistsExeption userAlreadyExistsExeption) {
             userAlreadyExistsExeption.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (EmailException e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Не удалось отправить письмо", e);
+        } catch (RuntimeException r) {
+            r.printStackTrace();
+            throw new ControllerExeption();
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -148,8 +159,24 @@ public class Controller {
 
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
     @ResponseBody
-    public boolean checkUser(@RequestBody UserDTO userDTO) {
+    public UserExistsDTO checkUser(@RequestBody UserDTO userDTO) {
         System.out.println(userDTO.toString());
-        return emailService.checkUser(userDTO.getLogin(), userDTO.getPassword());
+        boolean isExist = userService.checkUser(userDTO.getLogin(), userDTO.getPassword());
+        return new UserExistsDTO(userDTO.getLogin(), isExist);
+    }
+
+    @RequestMapping(value = "/mainWithTimeTables", method = RequestMethod.GET)
+    public ModelAndView mainWithTimeTables(@RequestParam String login) {
+        System.out.println("login = " + login);
+        List<Integer> groupIdByUserName = userRepository.getGroupIdByUserName(login);
+        List<TimeTableDTO> timeTableDTOS = timeTableRepository.selectTimeTable(groupIdByUserName);
+        ModelAndView modelAndView = new ModelAndView();
+        return new ModelAndView("index");
+    }
+
+    @ExceptionHandler(ControllerExeption.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Ошибка при отправке письма")
+    public void handleException(ControllerExeption ex) {
+        System.out.println("ex = " + ex);
     }
 }

@@ -1,34 +1,35 @@
 package web.service;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.transaction.annotation.Transactional;
 import web.exeptions.UserAlreadyExistsExeption;
-import web.repository.EmailRepository;
-import web.util.EmailUtil3;
+import web.repository.UserRepository;
+import web.util.EmailUtil;
 
 import java.util.UUID;
 
-public class EmailServiceImpl implements EmailService {
-    private final EmailRepository emailRepository;
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
 
-    public EmailServiceImpl(EmailRepository emailRepository) {
-        this.emailRepository = emailRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional(transactionManager = "mainTransactionManager")
-    public void sendAndSaveAccount(String email) throws UserAlreadyExistsExeption {
+    public void sendAndSaveAccount(String email) throws UserAlreadyExistsExeption, EmailException {
         String userName = getUserName(email);
-        if (emailRepository.isUserPresent(email)) {
+        if (userRepository.isUserPresent(email)) {
             throw new UserAlreadyExistsExeption();
         }
         String password = generatePassword();
-        emailRepository.saveUser(email, userName, password);
-        EmailUtil3.send(email, userName, password);
+        userRepository.saveUser(email, userName, password);
+        EmailUtil.send(email, userName, password);
     }
 
     @Override
     public boolean checkUser(String login, String password) {
-        return emailRepository.checkUser(login, password);
+        return userRepository.checkUser(login, password);
     }
 
     private String generatePassword() {

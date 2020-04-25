@@ -9,8 +9,8 @@ import web.repository.*;
 @Configuration
 public class RepositoryConfiguration {
     @Bean
-    public TimeTableRepository tableTimeRepository(JdbcTemplate jdbcTemplate) {
-        return new TimeTableRepositoryImpl(jdbcTemplate);
+    public TimeTableRepository tableTimeRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        return new TimeTableRepositoryImpl(jdbcTemplate, namedParameterJdbcTemplate);
     }
     @Bean
     public UniversitiesRepository universityRepository(JdbcTemplate jdbcTemplate) {
@@ -31,7 +31,7 @@ public class RepositoryConfiguration {
     }
 
     @Bean
-    public EmailRepository emailRepository(JdbcTemplate jdbcTemplate) {
-        return new EmailRepositoryImpl(jdbcTemplate);
+    public UserRepository emailRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        return new UserRepositoryImpl(jdbcTemplate, namedParameterJdbcTemplate);
     }
 }

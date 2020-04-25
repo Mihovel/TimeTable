@@ -3,19 +3,27 @@ package web.repository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import web.entity.Lesson;
 import web.entity.TimeTableDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TimeTableRepositoryImpl implements TimeTableRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public TimeTableRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public TimeTableRepositoryImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
@@ -38,9 +46,13 @@ public class TimeTableRepositoryImpl implements TimeTableRepository {
     }
 
     @Override
-    public TimeTableDTO selectTimeTable() {
-        String sql = "SELECT * FROM timetable";
-        return jdbcTemplate.queryForObject(sql, new Object[]{}, (rs, rowNum) ->
+    public List<TimeTableDTO> selectTimeTable(List<Integer> groupIds) {
+        String sql = "SELECT * FROM timetable where groupId in (:groups)";
+        String groups = groupIds.stream().map(String::valueOf).collect(Collectors.joining(","));
+        SqlParameterSource parameterSource = new MapSqlParameterSource("groups", groups);
+        Map<String, Object> params = new HashMap<>();
+        params.put("groups", groups);
+        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) ->
         {
             try {
                 return new TimeTableDTO(

@@ -31,6 +31,10 @@ input[type=text]:focus, input[type=password]:focus {
   outline: none;
 }
 
+.redtitle {
+color: red;
+}
+
 /* Set a style for all buttons */
 button {
   background-color: #4CAF50;
@@ -46,6 +50,7 @@ button {
 button:hover {
   opacity:1;
 }
+
 
 /* Extra styles for the cancel button */
 .cancelbtn {
@@ -140,24 +145,19 @@ hr {
             </div>
         </div>
     </form>
+    <div id="container"></div>
     <input id="login">login</input>
     <input id="password">Password</input>
-    <button id="b">Sign In</button>
-    <div id="container"></div>
+    <button id="signIn">Sign In</button>
 </div>
 
 <script>
 // Get the modal
 var modal = document.getElementById('id01');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
 
-$("#submit").click(function() {
+$("#submit").click(function(e) {
+    e.preventDefault();
     var email = $("#email").val();
     console.log('email '+email);
     $.post({
@@ -169,17 +169,21 @@ $("#submit").click(function() {
                             "email": email,
                         }),
                         success: function(res) {
+
                             $( "#container" ).append(
-                            "<h2>Вам на почту отправлен пароль</h2>"
+                            "<h2>Вам на почту отправлен логин и пароль, введите их ниже</h2>"
                             );
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.log(textStatus, errorThrown);
-                        }
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            var parsed = JSON.parse(xhr.responseText);
+                            $( "#container" ).append(
+                            '<h2 class="redtitle">' + parsed.message + '<h2>'
+                            );
+                             }
                     });
 });
 
-$("#b").click(function() {
+$("#signIn").click(function() {
     var login = $("#login").val();
     var password = $("#password").val();
     $.post({
@@ -192,10 +196,22 @@ $("#b").click(function() {
                             "password": password,
                         }),
                         success: function(res) {
-                            alert('logged');
+                            alert(res);
+                            var parsed = JSON.parse(res);
+                            alert(parsed);
+                            var userLogin = parsed.userLogin;
+                            var isExist = parsed.exist;
+                            alert(isExist);
+                            if (isExist) {
+                                window.location.href = '/mainWithTimeTables?userLogin=' + login;
+                            } else {
+                                alert('login and password are incorrect');
+                            }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
-                            console.log(textStatus, errorThrown);
+                            alert(qXHR);
+                            alert(textStatus);
+                            alert(errorThrown);
                         }
                     });
 });
